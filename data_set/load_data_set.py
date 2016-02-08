@@ -2,17 +2,15 @@
 
 
 class DataEnu(object):
-    def __init__(self, data):
-        self.data = data.strip()
-
     def normalization_data(self, data):
         min_value = min(self.enumerate_dict.values())
         max_value = max(self.enumerate_dict.values())
         return (self.enumerate_dict[data] + 0.1 - min_value) * 1.0 / max_value
 
-    def run(self):
-        if self.data in self.enumerate_dict:
-            return self.normalization_data(self.data)
+    def run(self, data):
+        data = data.strip()
+        if data in self.enumerate_dict:
+            return self.normalization_data(data)
         return 0.001
 
 
@@ -27,15 +25,18 @@ class WorkClassEnu(DataEnu):
                       'Never-worked': 8}
 
 
-def load(file):
+def load(data_file):
     data = []
-    with open(file, 'r') as fp:
+
+    work_class_enu = WorkClassEnu()
+
+    with open(data_file, 'r') as fp:
         line = fp.readline()
         while line:
             line = line.split(',')
             try:
                 data_line = [line[0],
-                             WorkClassEnu(line[1]).run()
+                             work_class_enu.run(line[1])
                              ]
                 data.append(data_line)
             except Exception as err:
