@@ -95,6 +95,50 @@ class SexEnu(DataEnu):
                       'Male': 2}
 
 
+class NativeCountryEnu(DataEnu):
+    enumerate_dict = {'United-States': 1,
+                      'Cambodia': 2,
+                      'England': 3,
+                      'Puerto-Rico': 4,
+                      'Canada': 5,
+                      'Germany': 6,
+                      'Outlying-US(Guam-USVI-etc)': 7,
+                      'India': 8,
+                      'Japan': 9,
+                      'Greece': 10,
+                      'South': 11,
+                      'China': 12,
+                      'Cuba': 13,
+                      'Iran': 14,
+                      'Honduras': 15,
+                      'Philippines': 16,
+                      'Italy': 17,
+                      'Poland': 18,
+                      'Jamaica': 19,
+                      'Vietnam': 20,
+                      'Mexico': 21,
+                      'Portugal': 22,
+                      'Ireland': 23,
+                      'France': 24,
+                      'Dominican-Republic': 25,
+                      'Laos': 26,
+                      'Ecuador': 27,
+                      'Taiwan': 28,
+                      'Haiti': 29,
+                      'Columbia': 30,
+                      'Hungary': 31,
+                      'Guatemala': 32,
+                      'Nicaragua': 33,
+                      'Scotland': 34,
+                      'Thailand': 35,
+                      'Yugoslavia': 36,
+                      'El-Salvador': 37,
+                      'Trinadad&Tobago': 38,
+                      'Peru': 39,
+                      'Hong': 40,
+                      'Holand-Netherlands': 41}
+
+
 def get_capital_gain_and_capital_loss_range(data_file):
     """
     capital_gain和capital_loss的数值都比较大，
@@ -136,6 +180,7 @@ def load(data_file):
     relationship_enu = RelationshipEnu()
     race_enu = RaceEnu()
     sex_enu = SexEnu()
+    native_country_enu = NativeCountryEnu()
 
     with open(data_file, 'r') as fp:
         line = fp.readline()
@@ -150,17 +195,19 @@ def load(data_file):
                 而且该值比较大，不做归一化的话会影响模型的拟合，
                 故暂时忽略该项。
                 """
-                data_line = [line[0],
+                data_line = [float(line[0]),
                              work_class_enu.run(line[1]),
                              education_enu.run(line[3]),
-                             line[4],
+                             float(line[4]),
                              marital_status_enu.run(line[5]),
                              occupation_enu.run(line[6]),
                              relationship_enu.run(line[7]),
                              race_enu.run(line[8]),
                              sex_enu.run(line[9]),
                              (float(line[10]) + 0.1 - capital_gain_min) / capital_gain_max,
-                             (float(line[11]) + 0.1 - capital_loss_min) / capital_loss_max
+                             (float(line[11]) + 0.1 - capital_loss_min) / capital_loss_max,
+                             float(line[12]),
+                             native_country_enu.run(line[13])
                              ]
                 data.append(data_line)
             except Exception as err:
