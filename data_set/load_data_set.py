@@ -56,22 +56,66 @@ class MaritalStatusEnu(DataEnu):
                       'Married-AF-spouse': 7}
 
 
+class OccupationEnu(DataEnu):
+    enumerate_dict = {'Tech-support': 1,
+                      'Craft-repair': 2,
+                      'Other-service': 3,
+                      'Sales': 4,
+                      'Exec-managerial': 5,
+                      'Prof-specialty': 6,
+                      'Handlers-cleaners': 7,
+                      'Machine-op-inspct': 8,
+                      'Adm-clerical': 9,
+                      'Farming-fishing': 10,
+                      'Transport-moving': 11,
+                      'Priv-house-serv': 12,
+                      'Protective-serv': 13,
+                      'Armed-Forces': 14}
+
+
+class RelationshipEnu(DataEnu):
+    enumerate_dict = {'Wife': 1,
+                      'Own-child': 2,
+                      'Husband': 3,
+                      'Not-in-family': 4,
+                      'Other-relative': 5,
+                      'Unmarried': 6}
+
+
+class RaceEnu(DataEnu):
+    enumerate_dict = {'White': 1,
+                      'Asian-Pac-Islander': 2,
+                      'Amer-Indian-Eskimo': 3,
+                      'Other': 4,
+                      'Black': 5}
+
+
+class SexEnu(DataEnu):
+    enumerate_dict = {'Female': 1,
+                      'Male': 2}
+
+
 def load(data_file):
     data = []
 
     work_class_enu = WorkClassEnu()
     education_enu = EducationEnu()
     marital_status_enu = MaritalStatusEnu()
+    occupation_enu = OccupationEnu()
+    relationship_enu = RelationshipEnu()
+    race_enu = RaceEnu()
+    sex_enu = SexEnu()
 
     with open(data_file, 'r') as fp:
         line = fp.readline()
         while line:
             line = line.split(',')
-            if len(line) < 3:
-                break
+            if len(line) == 1:
+                line = fp.readline()
+                continue
             try:
                 """
-                数据集的第三项fnlwgt暂时不知道含义，
+                数据集的fnlwgt暂时不知道含义，
                 而且该值比较大，不做归一化的话会影响模型的拟合，
                 故暂时忽略该项。
                 """
@@ -79,7 +123,11 @@ def load(data_file):
                              work_class_enu.run(line[1]),
                              education_enu.run(line[3]),
                              line[4],
-                             marital_status_enu.run(line[5])
+                             marital_status_enu.run(line[5]),
+                             occupation_enu.run(line[6]),
+                             relationship_enu.run(line[7]),
+                             race_enu.run(line[8]),
+                             sex_enu.run(line[9]),
                              ]
                 data.append(data_line)
             except Exception as err:
