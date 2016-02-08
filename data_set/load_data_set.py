@@ -1,6 +1,7 @@
 # coding=utf-8
 import sys
 import traceback
+import numpy as np
 
 
 class DataEnu(object):
@@ -168,6 +169,7 @@ def get_capital_gain_and_capital_loss_range(data_file):
 
 def load(data_file):
     data = []
+    label = []
 
     capital_data = get_capital_gain_and_capital_loss_range(data_file)
     capital_gain_max, capital_gain_min = capital_data[0]
@@ -210,13 +212,23 @@ def load(data_file):
                              native_country_enu.run(line[13])
                              ]
                 data.append(data_line)
+
+                label_data = line[14].strip()
+                if label_data == '>50K':
+                    label.append(1)
+                elif label_data == '<=50K':
+                    label.append(0)
+                else:
+                    raise ValueError('Invalid label: %s' % label_data)
+
             except Exception as err:
                 print 'error happen:', err
                 traceback.print_exc()
                 sys.exit(1)
             line = fp.readline()
-    print data
+    return np.mat(data), np.mat(label)
 
 
 if __name__ == '__main__':
-    load('./adult.data')
+    data_mat, label_mat = load('./adult.data')
+    print label_mat.shape
