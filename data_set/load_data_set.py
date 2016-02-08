@@ -95,8 +95,39 @@ class SexEnu(DataEnu):
                       'Male': 2}
 
 
+def get_capital_gain_and_capital_loss_range(data_file):
+    """
+    capital_gain和capital_loss的数值都比较大，
+    因此需要获得这两项数据的最大最小值，以便进行归一化
+    """
+    with open(data_file, 'r') as fp:
+        capital_gain = []
+        capital_loss = []
+        line = fp.readline()
+        while line:
+            try:
+                line = line.split(',')
+                if len(line) == 1:
+                    line = fp.readline()
+                    continue
+                capital_gain.append(line[10].strip())
+                capital_loss.append(line[11].strip())
+            except Exception as err:
+                print 'error happen:', err
+                traceback.print_exc()
+                sys.exit(1)
+            line = fp.readline()
+    res = [[float(max(capital_gain)), float(min(capital_gain))],
+           [float(max(capital_loss)), float(min(capital_loss))]]
+    return res
+
+
 def load(data_file):
     data = []
+
+    capital_data = get_capital_gain_and_capital_loss_range(data_file)
+    capital_gain_max, capital_gain_min = capital_data[0]
+    capital_loss_max, capital_loss_min = capital_data[1]
 
     work_class_enu = WorkClassEnu()
     education_enu = EducationEnu()
@@ -128,6 +159,8 @@ def load(data_file):
                              relationship_enu.run(line[7]),
                              race_enu.run(line[8]),
                              sex_enu.run(line[9]),
+                             (float(line[10]) + 0.1 - capital_gain_min) / capital_gain_max,
+                             (float(line[11]) + 0.1 - capital_loss_min) / capital_loss_max
                              ]
                 data.append(data_line)
             except Exception as err:
