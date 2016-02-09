@@ -226,9 +226,9 @@ def load(data_file):
                 traceback.print_exc()
                 sys.exit(1)
             line = fp.readline()
-    return np.mat(data), np.mat(label)
+    return data, label
 
 
 if __name__ == '__main__':
     data_mat, label_mat = load('./adult.data')
-    print label_mat.shape
+    print np.mat(data_mat)
