@@ -1,7 +1,7 @@
 # coding=utf-8
 import numpy as np
 
-from log_regres import log_regres as lr
+import log_regres as lr
 from data_set import load_data_set as lds
 
 
@@ -27,5 +27,5 @@ def predict():
             wrong += 1
 
     print '总数据数目：', pred_data_len
-    print '预测错误数目：', wrong
-    print '正确率：', (pred_data_len - wrong) * 1.0 / pred_data_len
+    print 'LR预测错误数目：', wrong
+    print 'LR正确率：', (pred_data_len - wrong) * 1.0 / pred_data_len

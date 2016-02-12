@@ -1,12 +1,10 @@
 #! /usr/bin/env python
 # coding=utf-8
-from data_set import load_data_set as lds
-from log_regres import log_regres as lr
-from predict import predict as pred
+from log_regres import predict as lr_predict
 
 
 def main():
-    pred.predict()
+    lr_predict.predict()
 
 
 if __name__ == '__main__':
