@@ -48,14 +48,6 @@ def stoc_grad_ascent(data_matrix, class_labels, num_iter=150):
     return weights
 
 
-def judge_by_log(x1, x2, weis):
-    z = weis[0] + weis[1] * x1 + weis[2] * x2
-    res = sigmoid(z)
-    if res > 0.5:
-        return 1
-    return 0
-
-
 if __name__ == '__main__':
     data_arr, label_mat = lds.load('./data_set/adult.data')
     w = grad_ascent(data_arr, label_mat)

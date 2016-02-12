@@ -2,12 +2,11 @@
 # coding=utf-8
 from data_set import load_data_set as lds
 from log_regres import log_regres as lr
+from predict import predict as pred
 
 
 def main():
-    data_arr, label_mat = lds.load('./data_set/adult.data')
-    w = lr.grad_ascent(data_arr, label_mat)
-    print('weights:', w)
+    pred.predict()
 
 
 if __name__ == '__main__':

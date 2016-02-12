@@ -215,9 +215,9 @@ def load(data_file):
                 data.append(data_line)
 
                 label_data = line[14].strip()
-                if label_data == '>50K':
+                if label_data in ['>50K', '>50K.']:
                     label.append(1)
-                elif label_data == '<=50K':
+                elif label_data in ['<=50K', '<=50K.']:
                     label.append(0)
                 else:
                     raise ValueError('Invalid label: %s' % label_data)
