@@ -197,7 +197,8 @@ def load(data_file):
                 而且该值比较大，不做归一化的话会影响模型的拟合，
                 故暂时忽略该项。
                 """
-                data_line = [float(line[0]),
+                data_line = [1.0,
+                             float(line[0]),
                              work_class_enu.run(line[1]),
                              education_enu.run(line[3]),
                              float(line[4]),
