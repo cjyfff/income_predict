@@ -43,3 +43,7 @@ blog_env/
 
 #Pycharm settings
 .idea/
+
+#svm tmp file
+*.smp
+
