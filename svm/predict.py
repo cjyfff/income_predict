@@ -23,6 +23,7 @@ def predict():
     data_arr, label_arr = lds.load('./data_set/adult.data')
     data_arr = data_format(data_arr)
     prob = svm_problem(label_arr, data_arr)
+    # 以下参数c和g通过交叉验证得到
     param = svm_parameter('-c 2048.0 -g 0.001953125')
     svm_model = svm_train(prob, param)
 
@@ -36,8 +37,8 @@ def predict():
         if int(p_label[0]) != int(pred_label_arr[idx]):
             wrong += 1
 
-    print 'SVM预测错误数目：', wrong
-    print 'SVM正确率：', (pred_data_len - wrong) * 1.0 / pred_data_len
+    accuracy = (pred_data_len - wrong) * 1.0 / pred_data_len
+    return pred_data_len, wrong, accuracy
 
 
 def get_cv_data_file():

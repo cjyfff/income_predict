@@ -26,6 +26,5 @@ def predict():
         if res != int(pred_label_arr[idx]):
             wrong += 1
 
-    print '总数据数目：', pred_data_len
-    print 'LR预测错误数目：', wrong
-    print 'LR正确率：', (pred_data_len - wrong) * 1.0 / pred_data_len
+    accuracy = (pred_data_len - wrong) * 1.0 / pred_data_len
+    return pred_data_len, wrong, accuracy
