@@ -167,6 +167,17 @@ def get_capital_gain_and_capital_loss_range(data_file):
     return res
 
 
+def discretized_age(age):
+    """对age进行离散化"""
+    if age < 20:
+        return 0.1
+    elif age < 40:
+        return 0.2
+    elif age < 60:
+        return 0.3
+    return 0.5
+
+
 def load(data_file):
     data = []
     label = []
@@ -198,7 +209,7 @@ def load(data_file):
                 故暂时忽略该项。
                 """
                 data_line = [1.0,
-                             float(line[0]),
+                             discretized_age(float(line[0])),
                              work_class_enu.run(line[1]),
                              education_enu.run(line[3]),
                              float(line[4]),
