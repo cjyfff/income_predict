@@ -178,6 +178,30 @@ def discretized_age(age):
     return 0.5
 
 
+def discretized_education_num(education_num):
+    """对education_num进行离散化"""
+    if education_num < 5:
+        return 0.1
+    elif education_num < 8:
+        return 0.2
+    elif education_num < 9:
+        return 0.3
+    elif education_num < 13:
+        return 0.4
+    return 0.6
+
+
+def discretized_hours_per_week(hours):
+    """对hours_per_week进行离散化"""
+    if hours <= 20:
+        return 0.1
+    elif hours <= 40:
+        return 0.2
+    elif hours <= 50:
+        return 0.3
+    return 0.5
+
+
 def load(data_file):
     data = []
     label = []
@@ -212,7 +236,7 @@ def load(data_file):
                              discretized_age(float(line[0])),
                              work_class_enu.run(line[1]),
                              education_enu.run(line[3]),
-                             float(line[4]),
+                             discretized_education_num(float(line[4])),
                              marital_status_enu.run(line[5]),
                              occupation_enu.run(line[6]),
                              relationship_enu.run(line[7]),
@@ -220,7 +244,7 @@ def load(data_file):
                              sex_enu.run(line[9]),
                              (float(line[10]) + 0.1 - capital_gain_min) / capital_gain_max,
                              (float(line[11]) + 0.1 - capital_loss_min) / capital_loss_max,
-                             float(line[12]),
+                             discretized_hours_per_week(float(line[12])),
                              native_country_enu.run(line[13])
                              ]
                 data.append(data_line)
