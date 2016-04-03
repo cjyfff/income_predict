@@ -8,7 +8,13 @@ from data_set import load_data_set as lds
 def predict():
     data_arr, label_arr = lds.load('./data_set/adult.data')
     data_arr = np.mat(data_arr)
-    classifier_arr = ada_boost_train_ds(data_arr, label_arr, 10)
+    f_label_arr = []
+    for i in label_arr:
+        if i == 1:
+            f_label_arr.append(i)
+        else:
+            f_label_arr.append(-1)
+    classifier_arr = ada_boost_train_ds(data_arr, f_label_arr, 30)
 
     test_data_arr, test_label_arr = lds.load('./data_set/adult.test')
 
