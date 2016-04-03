@@ -2,7 +2,8 @@
    
    
 #### 概述   
-基于UCI的这一份[美国成年人收入数据](http://archive.ics.uci.edu/ml/datasets/Adult)，使用机器学习算法对美国成年人的收入进行预测。目前使用的分类模型是Logistic Regression、SVM和AdaBoost。   
+基于UCI的这一份[美国成年人收入数据](http://archive.ics.uci.edu/ml/datasets/Adult)，使用机器学习算法对美国成年人的收入进行预测。   
+目前使用的分类模型是Logistic Regression、SVM和AdaBoost。   
    
    
 #### 依赖   
