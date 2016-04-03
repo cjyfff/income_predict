@@ -19,15 +19,13 @@ def data_format(data_arr):
     return data_list
 
 
-def predict():
-    data_arr, label_arr = lds.load('./data_set/adult.data')
-    data_arr = data_format(data_arr)
-    prob = svm_problem(label_arr, data_arr)
+def predict(tr_data_arr, tr_label_arr, pred_data_arr, pred_label_arr):
+    data_arr = data_format(tr_data_arr)
+    prob = svm_problem(tr_label_arr, data_arr)
     # 以下参数c和g通过交叉验证得到
     param = svm_parameter('-c 2048.0 -g 0.001953125')
     svm_model = svm_train(prob, param)
 
-    pred_data_arr, pred_label_arr = lds.load('./data_set/adult.test')
     pred_data_arr = data_format(pred_data_arr)
     pred_data_len = len(pred_label_arr)
     wrong = 0
@@ -37,7 +35,7 @@ def predict():
         if int(p_label[0]) != int(pred_label_arr[idx]):
             wrong += 1
 
-    accuracy = (pred_data_len - wrong) * 1.0 / pred_data_len
+    accuracy = (pred_data_len - wrong) * 100.0 / pred_data_len
     return pred_data_len, wrong, accuracy
 
 

@@ -13,11 +13,9 @@ def judge_by_log(x, weis):
     return 0
 
 
-def predict():
-    data_arr, label_arr = lds.load('./data_set/adult.data')
-    weis = lr.stoc_grad_ascent(data_arr, label_arr)
+def predict(tr_data_arr, tr_label_arr, pred_data_arr, pred_label_arr):
+    weis = lr.stoc_grad_ascent(tr_data_arr, tr_label_arr)
 
-    pred_data_arr, pred_label_arr = lds.load('./data_set/adult.test')
     pred_data_len = len(pred_label_arr)
     wrong = 0
     for idx, data in enumerate(pred_data_arr):
@@ -26,5 +24,5 @@ def predict():
         if res != int(pred_label_arr[idx]):
             wrong += 1
 
-    accuracy = (pred_data_len - wrong) * 1.0 / pred_data_len
+    accuracy = (pred_data_len - wrong) * 100.0 / pred_data_len
     return pred_data_len, wrong, accuracy
