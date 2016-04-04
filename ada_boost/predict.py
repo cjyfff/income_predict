@@ -2,7 +2,6 @@
 import numpy as np
 from boost import ada_classify
 from adaboost import ada_boost_train_ds
-from data_set import load_data_set as lds
 
 
 def predict(tr_data_arr, tr_label_arr, test_data_arr, test_label_arr):
@@ -13,7 +12,8 @@ def predict(tr_data_arr, tr_label_arr, test_data_arr, test_label_arr):
             f_label_arr.append(i)
         else:
             f_label_arr.append(-1)
-    classifier_arr = ada_boost_train_ds(data_arr, f_label_arr, 30)
+    classifier_arr, agg_class_est = ada_boost_train_ds(
+        data_arr, f_label_arr, 30)
 
     test_label_arr = np.mat([[i] for i in test_label_arr])
     test_label_arr[test_label_arr == 0] = -1

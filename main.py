@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # coding=utf-8
 import time
+import numpy as np
 from log_regres import predict as lr_predict
 from svm import predict as svm_predict
 from ada_boost import predict as ada_predict
@@ -41,5 +42,21 @@ def main():
     print 'AdaBoost训练模型以及预测共耗时：%s秒' % (ada_et - ada_st)
 
 
+def test_adaboost_roc():
+    """计算AdaBoost的ROC以及AUC"""
+    from ada_boost.adaboost import ada_boost_train_ds, plotROC
+    tr_data_arr, tr_label_arr = lds.load('./data_set/adult.data')
+    data_arr = np.mat(tr_data_arr)
+    f_label_arr = []
+    for i in tr_label_arr:
+        if i == 1:
+            f_label_arr.append(i)
+        else:
+            f_label_arr.append(-1)
+    classifier_arr, agg_class_est = ada_boost_train_ds(data_arr, f_label_arr, 30)
+    plotROC(agg_class_est.T, tr_label_arr)
+
+
 if __name__ == '__main__':
     main()
+    # test_adaboost_roc()

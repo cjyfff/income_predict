@@ -2,7 +2,6 @@
 import numpy as np
 
 import log_regres as lr
-from data_set import load_data_set as lds
 
 
 def judge_by_log(x, weis):
