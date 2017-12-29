@@ -48,7 +48,10 @@ def stoc_grad_ascent(data_matrix, class_labels, num_iter=150):
     return weights
 
 
-if __name__ == '__main__':
+def main():
     data_arr, label_mat = lds.load('./data_set/adult.data')
     w = grad_ascent(data_arr, label_mat)
     print('weights:', w)
+
+if __name__ == '__main__':
+    main()
