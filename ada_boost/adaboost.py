@@ -42,7 +42,7 @@ def ada_boost_train_ds(data_arr, class_labels, num_lt=40):
     return weak_class_arr, agg_class_est
 
 
-def plotROC(pred_strengths, class_labels):
+def plot_roc(pred_strengths, class_labels):
     """
     从右上角（1.0, 1.0）开始遍历，遍历的顺序为按预测值
     有小到大开始，预测值小的，但是被归为1的，说明真阳率下降，向y轴负方向移动，
@@ -77,7 +77,7 @@ def plotROC(pred_strengths, class_labels):
     plt.show()
 
 
-if __name__ == '__main__':
+def main():
     data_mat, class_labels = load_simp_data()
     classifier_array = ada_boost_train_ds(data_mat, class_labels, 9)
     """
@@ -87,3 +87,7 @@ if __name__ == '__main__':
      {'dim': 0, 'ineq': 'lt', 'thresh': 0.90000000000000002, 'alpha': 0.8958797346140273}]
     """
     print('classifier_array:', classifier_array)
+
+
+if __name__ == '__main__':
+    main()

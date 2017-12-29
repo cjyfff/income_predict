@@ -4,21 +4,23 @@ import traceback
 import numpy as np
 
 
-class DataEnu(object):
+class DataEmu(object):
+    emu_dict = {}
+    
     def normalization_data(self, data):
-        min_value = min(self.enumerate_dict.values())
-        max_value = max(self.enumerate_dict.values())
-        return (self.enumerate_dict[data] + 0.1 - min_value) * 1.0 / max_value
+        min_value = min(self.emu_dict.values())
+        max_value = max(self.emu_dict.values())
+        return (self.emu_dict[data] + 0.1 - min_value) * 1.0 / max_value
 
     def run(self, data):
         data = data.strip()
-        if data in self.enumerate_dict:
+        if data in self.emu_dict:
             return self.normalization_data(data)
         return 0.001
 
 
-class WorkClassEnu(DataEnu):
-    enumerate_dict = {'Private': 1,
+class WorkClassEmu(DataEmu):
+    emu_dict = {'Private': 1,
                       'Self-emp-not-inc': 2,
                       'Self-emp-inc': 3,
                       'Federal-gov': 4,
@@ -28,8 +30,8 @@ class WorkClassEnu(DataEnu):
                       'Never-worked': 8}
 
 
-class EducationEnu(DataEnu):
-    enumerate_dict = {'Bachelors': 1,
+class EducationEmu(DataEmu):
+    emu_dict = {'Bachelors': 1,
                       'Some-college': 2,
                       '11th': 3,
                       'HS-grad': 4,
@@ -47,8 +49,8 @@ class EducationEnu(DataEnu):
                       'Preschool': 16}
 
 
-class MaritalStatusEnu(DataEnu):
-    enumerate_dict = {'Married-civ-spouse': 1,
+class MaritalStatusEmu(DataEmu):
+    emu_dict = {'Married-civ-spouse': 1,
                       'Divorced': 2,
                       'Never-married': 3,
                       'Separated': 4,
@@ -57,8 +59,8 @@ class MaritalStatusEnu(DataEnu):
                       'Married-AF-spouse': 7}
 
 
-class OccupationEnu(DataEnu):
-    enumerate_dict = {'Tech-support': 1,
+class OccupationEmu(DataEmu):
+    emu_dict = {'Tech-support': 1,
                       'Craft-repair': 2,
                       'Other-service': 3,
                       'Sales': 4,
@@ -74,8 +76,8 @@ class OccupationEnu(DataEnu):
                       'Armed-Forces': 14}
 
 
-class RelationshipEnu(DataEnu):
-    enumerate_dict = {'Wife': 1,
+class RelationshipEmu(DataEmu):
+    emu_dict = {'Wife': 1,
                       'Own-child': 2,
                       'Husband': 3,
                       'Not-in-family': 4,
@@ -83,21 +85,21 @@ class RelationshipEnu(DataEnu):
                       'Unmarried': 6}
 
 
-class RaceEnu(DataEnu):
-    enumerate_dict = {'White': 1,
+class RaceEmu(DataEmu):
+    emu_dict = {'White': 1,
                       'Asian-Pac-Islander': 2,
                       'Amer-Indian-Eskimo': 3,
                       'Other': 4,
                       'Black': 5}
 
 
-class SexEnu(DataEnu):
-    enumerate_dict = {'Female': 1,
+class SexEmu(DataEmu):
+    emu_dict = {'Female': 1,
                       'Male': 2}
 
 
-class NativeCountryEnu(DataEnu):
-    enumerate_dict = {'United-States': 1,
+class NativeCountryEmu(DataEmu):
+    emu_dict = {'United-States': 1,
                       'Cambodia': 2,
                       'England': 3,
                       'Puerto-Rico': 4,
@@ -210,14 +212,14 @@ def load(data_file):
     capital_gain_max, capital_gain_min = capital_data[0]
     capital_loss_max, capital_loss_min = capital_data[1]
 
-    work_class_enu = WorkClassEnu()
-    education_enu = EducationEnu()
-    marital_status_enu = MaritalStatusEnu()
-    occupation_enu = OccupationEnu()
-    relationship_enu = RelationshipEnu()
-    race_enu = RaceEnu()
-    sex_enu = SexEnu()
-    native_country_enu = NativeCountryEnu()
+    work_class_emu = WorkClassEmu()
+    education_emu = EducationEmu()
+    marital_status_emu = MaritalStatusEmu()
+    occupation_emu = OccupationEmu()
+    relationship_emu = RelationshipEmu()
+    race_emu = RaceEmu()
+    sex_emu = SexEmu()
+    native_country_emu = NativeCountryEmu()
 
     with open(data_file, 'r') as fp:
         line = fp.readline()
@@ -234,18 +236,18 @@ def load(data_file):
                 """
                 data_line = [1.0,
                              discretized_age(float(line[0])),
-                             work_class_enu.run(line[1]),
-                             education_enu.run(line[3]),
+                             work_class_emu.run(line[1]),
+                             education_emu.run(line[3]),
                              discretized_education_num(float(line[4])),
-                             marital_status_enu.run(line[5]),
-                             occupation_enu.run(line[6]),
-                             relationship_enu.run(line[7]),
-                             race_enu.run(line[8]),
-                             sex_enu.run(line[9]),
+                             marital_status_emu.run(line[5]),
+                             occupation_emu.run(line[6]),
+                             relationship_emu.run(line[7]),
+                             race_emu.run(line[8]),
+                             sex_emu.run(line[9]),
                              (float(line[10]) + 0.1 - capital_gain_min) / capital_gain_max,
                              (float(line[11]) + 0.1 - capital_loss_min) / capital_loss_max,
                              discretized_hours_per_week(float(line[12])),
-                             native_country_enu.run(line[13])
+                             native_country_emu.run(line[13])
                              ]
                 data.append(data_line)
 

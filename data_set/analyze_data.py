@@ -9,14 +9,14 @@ def load_data(data_file):
     data = []
     label = []
 
-    work_class_enu = lds.WorkClassEnu()
-    education_enu = lds.EducationEnu()
-    marital_status_enu = lds.MaritalStatusEnu()
-    occupation_enu = lds.OccupationEnu()
-    relationship_enu = lds.RelationshipEnu()
-    race_enu = lds.RaceEnu()
-    sex_enu = lds.SexEnu()
-    native_country_enu = lds.NativeCountryEnu()
+    work_class_emu = lds.WorkClassEmu()
+    education_emu = lds.EducationEmu()
+    marital_status_emu = lds.MaritalStatusEmu()
+    occupation_emu = lds.OccupationEmu()
+    relationship_emu = lds.RelationshipEmu()
+    race_emu = lds.RaceEmu()
+    sex_emu = lds.SexEmu()
+    native_country_emu = lds.NativeCountryEmu()
 
     with open(data_file, 'r') as fp:
         line = fp.readline()
@@ -33,18 +33,18 @@ def load_data(data_file):
                 """
                 data_line = [1.0,
                              float(line[0]),
-                             work_class_enu.run(line[1]),
-                             education_enu.run(line[3]),
+                             work_class_emu.run(line[1]),
+                             education_emu.run(line[3]),
                              float(line[4]),
-                             marital_status_enu.run(line[5]),
-                             occupation_enu.run(line[6]),
-                             relationship_enu.run(line[7]),
-                             race_enu.run(line[8]),
-                             sex_enu.run(line[9]),
+                             marital_status_emu.run(line[5]),
+                             occupation_emu.run(line[6]),
+                             relationship_emu.run(line[7]),
+                             race_emu.run(line[8]),
+                             sex_emu.run(line[9]),
                              float(line[10]),
                              float(line[11]),
                              float(line[12]),
-                             native_country_enu.run(line[13])
+                             native_country_emu.run(line[13])
                              ]
                 data.append(data_line)
 

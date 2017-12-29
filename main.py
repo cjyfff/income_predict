@@ -12,7 +12,6 @@ def main():
     tr_data_arr, tr_label_arr = lds.load('./data_set/adult.data')
     pred_data_arr, pred_label_arr = lds.load('./data_set/adult.test')
 
-
     lr_st = time.time()
     lr_pred_data_len, lr_wrong, lr_accuracy = lr_predict.predict(
         tr_data_arr, tr_label_arr, pred_data_arr, pred_label_arr)
@@ -44,7 +43,7 @@ def main():
 
 def test_adaboost_roc():
     """计算AdaBoost的ROC以及AUC"""
-    from ada_boost.adaboost import ada_boost_train_ds, plotROC
+    from ada_boost.adaboost import ada_boost_train_ds, plot_roc
     tr_data_arr, tr_label_arr = lds.load('./data_set/adult.data')
     data_arr = np.mat(tr_data_arr)
     f_label_arr = []
@@ -54,7 +53,7 @@ def test_adaboost_roc():
         else:
             f_label_arr.append(-1)
     classifier_arr, agg_class_est = ada_boost_train_ds(data_arr, f_label_arr, 30)
-    plotROC(agg_class_est.T, tr_label_arr)
+    plot_roc(agg_class_est.T, tr_label_arr)
 
 
 if __name__ == '__main__':
