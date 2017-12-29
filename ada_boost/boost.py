@@ -1,5 +1,6 @@
 # coding=utf-8
 import numpy as np
+from adaboost import load_simp_data, ada_boost_train_ds
 
 
 def stump_classify(data_matrix, dimen, thresh_val, thresh_ineq):
@@ -70,8 +71,7 @@ def ada_classify(dat_to_class, classifier_arr):
     return np.sign(agg_class_est)
 
 
-if __name__ == '__main__':
-    from adaboost import load_simp_data, ada_boost_train_ds
+def main():
     data_mat, class_labels = load_simp_data()
     # D = np.mat(np.ones((5, 1)) / 5)
     # best_stump, min_error, best_class_est = build_stump(data_mat, class_labels, D)
@@ -80,3 +80,7 @@ if __name__ == '__main__':
     classifier_arr = ada_boost_train_ds(data_mat, class_labels, 30)
     res = ada_classify([1.3, 1.2], classifier_arr)
     print("res: ", res)
+
+
+if __name__ == '__main__':
+    main()
